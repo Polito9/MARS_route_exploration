@@ -33,9 +33,6 @@ Algoritmos de busqueda usados:
 -UCS (Dijkstra)
 '''
 
-test_map = [
-    [50, ]
-]
 #print(mars_map)
 
 print("Origin: ", row_0, col_0)

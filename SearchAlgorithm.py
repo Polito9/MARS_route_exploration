@@ -4,7 +4,8 @@ class SearchAlgorithm:
     row_f = 0
     col_f = 0
     mars_map = []
-    visited = [] #If a value there is -2, the cell is visited
+    visited = [] #Saves the distance from the original point to each visited cell, if the value is -1 it is not visisted
+
     #visited = set() #The visited set will save in string the column and row
     def __init__(self, row_0, col_0, row_f, col_f, mars_map):
         self.row_0 = row_0
@@ -12,12 +13,12 @@ class SearchAlgorithm:
         self.col_f = col_f
         self.col_0 = col_0
         self.mars_map = mars_map
-        
+
         #creating an empty 2D array of visited
         for _ in range(len(mars_map)):
             sub_array = []
             for _ in range(len(mars_map[0])):
-                sub_array.append(False)
+                sub_array.append(-1)
             
             self.visited.append(sub_array)
 
@@ -39,14 +40,14 @@ class SearchAlgorithm:
         #Calculates the distance between two points, and this is the heuristic
         return ((row_a - self.row_f)**2 + (col_a - self.col_f)**2)**(1/2)
 
-    def calculate_next_steps(self, row_a, col_a):
+    def calculate_next_steps(self, row_a, col_a, step_s):
         #Goes through all the possible states and validates that it is possible to be there
         aux = [-1, 0, 1]
         steps = []
         for i in aux:
             for j in aux:
-                if((not self.visited[row_a+i][col_a+j]) and self.validate_state(row_a, col_a, row_a+i, col_a+j)):
+                if((self.visited[row_a+i][col_a+j] == -1) and self.validate_state(row_a, col_a, row_a+i, col_a+j)):
                     #print("In: ", len(self.visited))
-                    steps.append((row_a+i, col_a+j))
+                    steps.append((row_a+i, col_a+j, step_s+1))
         return steps
         
