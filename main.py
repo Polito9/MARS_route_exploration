@@ -37,6 +37,10 @@ Algoritmos de busqueda usados:
 
 print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
+
+
 #BFS
-bf = BFS(row_0, col_0, row_f, col_f, mars_map)
+bf = BFS(row_0, col_0, row_f, col_f, mars_map, .25)
 bf.search()
+
+#UCS (Dijkstra)

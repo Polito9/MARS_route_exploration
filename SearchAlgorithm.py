@@ -5,14 +5,15 @@ class SearchAlgorithm:
     col_f = 0
     mars_map = []
     visited = [] #Saves the distance from the original point to each visited cell, if the value is -1 it is not visisted
-
+    max_height_movement = 0.25
     #visited = set() #The visited set will save in string the column and row
-    def __init__(self, row_0, col_0, row_f, col_f, mars_map):
+    def __init__(self, row_0, col_0, row_f, col_f, mars_map, max_height_movement):
         self.row_0 = row_0
         self.row_f = row_f
         self.col_f = col_f
         self.col_0 = col_0
         self.mars_map = mars_map
+        self.max_height_movement = max_height_movement
 
         #creating an empty 2D array of visited
 
@@ -33,7 +34,7 @@ class SearchAlgorithm:
         n2 = self.mars_map[row_a0][col_a0]
         dif = abs(n1 - n1)
         
-        if(dif>=.25):
+        if(dif>=self.max_height_movement):
             return False
         
         return True

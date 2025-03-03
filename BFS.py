@@ -3,8 +3,8 @@ from collections import deque
 
 class BFS(SearchAlgorithm):
     
-    def __init__(self, row_0, col_0, row_f, col_f, mars_map):
-        super().__init__(row_0, col_0, row_f, col_f, mars_map)
+    def __init__(self, row_0, col_0, row_f, col_f, mars_map, max_height_movement):
+        super().__init__(row_0, col_0, row_f, col_f, mars_map, max_height_movement)
 
 
     def search(self):
