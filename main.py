@@ -20,7 +20,7 @@ row_0 = get_row(y0)
 col_0 = get_column(x0)
 
 #Target
-xf = 3150
+xf = 3150 
 yf = 6800
 row_f = get_row(yf)
 col_f = get_column(xf)

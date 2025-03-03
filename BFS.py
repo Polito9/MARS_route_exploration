@@ -14,11 +14,11 @@ class BFS(SearchAlgorithm):
 
         #The starting point
         queue = deque()
-        queue.append((self.row_0, self.col_0, 0))        
+        queue.append((self.row_0, self.col_0, [(self.row_0, self.col_0)]))        
         #Doing the bfs
         while(len(queue)>0 and not founded):
             actual = queue.popleft()
-            if(self.visited[actual[0]][actual[1]] != -1):
+            if(len(self.visited[actual[0]][actual[1]])>0):
                 continue
 
             self.visited[actual[0]][actual[1]] = actual[2]
@@ -26,7 +26,8 @@ class BFS(SearchAlgorithm):
             #print(len(self.visited))
             #print("Actual: ",actual)
             if(actual[0] == self.row_f  and actual[1] == self.col_f):
-                print("Founded in ", actual[2], " steps")
+                print("Founded in ", actual[2])
+                print("It took ", len(actual[2]), " steps")
                 founded = True
 
             steps = self.calculate_next_steps(actual[0], actual[1], actual[2])

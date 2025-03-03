@@ -15,10 +15,12 @@ class SearchAlgorithm:
         self.mars_map = mars_map
 
         #creating an empty 2D array of visited
+
+        #Each cell will save the steps taken to get there, so a cell with no items means that it has not been visited
         for _ in range(len(mars_map)):
             sub_array = []
             for _ in range(len(mars_map[0])):
-                sub_array.append(-1)
+                sub_array.append([])
             
             self.visited.append(sub_array)
 
@@ -46,8 +48,10 @@ class SearchAlgorithm:
         steps = []
         for i in aux:
             for j in aux:
-                if((self.visited[row_a+i][col_a+j] == -1) and self.validate_state(row_a, col_a, row_a+i, col_a+j)):
+                if((len(self.visited[row_a+i][col_a+j]) == 0) and self.validate_state(row_a, col_a, row_a+i, col_a+j)):
                     #print("In: ", len(self.visited))
-                    steps.append((row_a+i, col_a+j, step_s+1))
+                    new_s = [row[:] for row in step_s]
+                    new_s.append((row_a+i, col_a+j))
+                    steps.append((row_a+i, col_a+j, new_s))
         return steps
         
