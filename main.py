@@ -1,4 +1,5 @@
 import numpy as np
+from BFS import BFS
 
 #Loading numpy array
 mars_map = np.load('mars_map.npy')
@@ -21,8 +22,8 @@ col_0 = get_column(x0)
 #Target
 xf = 3150
 yf = 6800
-row_f = get_row(xf)
-col_f = get_column(yf)
+row_f = get_row(yf)
+col_f = get_column(xf)
 
 '''
 Algoritmos de busqueda usados: 
@@ -31,3 +32,14 @@ Algoritmos de busqueda usados:
 -Greedy
 -UCS (Dijkstra)
 '''
+
+test_map = [
+    [50, ]
+]
+#print(mars_map)
+
+print("Origin: ", row_0, col_0)
+print("Target: ", row_f, col_f)
+#BFS
+bf = BFS(row_0, col_0, row_f, col_f, mars_map)
+bf.search()
