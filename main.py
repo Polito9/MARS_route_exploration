@@ -1,5 +1,8 @@
 import numpy as np
 from BFS import BFS
+from GreedySearch import GreedySearch
+from UCS import UCS
+from A_star import A_star
 
 #Loading numpy array
 mars_map = np.load('mars_map.npy')
@@ -37,10 +40,24 @@ Algoritmos de busqueda usados:
 
 print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
+MAX_HEIGHT_MOVEMENT = .25
 
+#Greedy
+print("With Greedy Search")
+greedy = GreedySearch(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+greedy.search()
 
 #BFS
-bf = BFS(row_0, col_0, row_f, col_f, mars_map, .25)
+print("With BFS: ")
+bf = BFS(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 bf.search()
 
-#UCS (Dijkstra)
+#UCS
+print("With UCS: ")
+ucs = UCS(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+ucs.search()
+
+#A*
+print("WITH A*: ")
+a_star = A_star(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+a_star.search()
