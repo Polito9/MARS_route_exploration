@@ -16,32 +16,41 @@ class SearchAlgorithm:
         self.max_height_movement = max_height_movement
 
         #creating an empty 2D array of visited
-
-        #Each cell will save the steps taken to get there, so a cell with no items means that it has not been visited
-        for _ in range(len(mars_map)):
-            sub_array = []
-            for _ in range(len(mars_map[0])):
-                sub_array.append([])
-            
-            self.visited.append(sub_array)
+        self.reset_visited()
+        
 
     def validate_state(self, row_a0, col_a0,row_a1, col_a1):
         #Validate that it is not -1 and the difference is less than .25
         if(self.mars_map[row_a1][col_a1] == -1):
             return False
         
-        n1 = self.mars_map[row_a1][col_a1]
-        n2 = self.mars_map[row_a0][col_a0]
-        dif = abs(n1 - n1)
         
-        if(dif>=self.max_height_movement):
+        if(self.calculate_cost(row_a0, col_a0, row_a1, col_a1)>=self.max_height_movement):
             return False
         
         return True
      
+    def reset_visited(self):
+        #Each cell will save the steps taken to get there, so a cell with no items means that it has not been visited
+        self.visited = []
+        for _ in range(len(self.mars_map)):
+            sub_array = []
+            for _ in range(len(self.mars_map[0])):
+                sub_array.append([])
+            
+            self.visited.append(sub_array)
+
     def calculate_heuristic(self, row_a, col_a):
         #Calculates the distance between two points, and this is the heuristic
         return ((row_a - self.row_f)**2 + (col_a - self.col_f)**2)**(1/2)
+
+    def calculate_cost(self, row_a0, col_a0,row_a1, col_a1):
+        n1 = self.mars_map[row_a1][col_a1]
+        n2 = self.mars_map[row_a0][col_a0]
+        dif = abs(n1 - n2)
+        
+        return dif
+
 
     def calculate_next_steps(self, row_a, col_a, step_s):
         #Goes through all the possible states and validates that it is possible to be there
