@@ -1,8 +1,6 @@
 import numpy as np
 from BFS import BFS
-from GreedySearch import GreedySearch
-from UCS import UCS
-from A_star import A_star
+from InformedSearch import *
 
 #Loading numpy array
 mars_map = np.load('mars_map.npy')

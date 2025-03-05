@@ -1,17 +1,17 @@
 from SearchAlgorithm import SearchAlgorithm
 from queue import PriorityQueue
 
-class A_star(SearchAlgorithm):
+class InformedSearch(SearchAlgorithm):
     def __init__(self, row_0, col_0, row_f, col_f, mars_map, max_height_movement):
         super().__init__(row_0, col_0, row_f, col_f, mars_map, max_height_movement)
-    
+
     def search(self):
         founded = False
 
         #The starting point
         queue = PriorityQueue()
-        queue.put((self.calculate_heuristic(self.row_0, self.col_0) + 0,(self.row_0, self.col_0, [(self.row_0, self.col_0)])))        
-        #Doing the A_Star
+        queue.put((self.get_cost(self.row_0, self.col_0, self.row_0, self.col_0) , (self.row_0, self.col_0, [(self.row_0, self.col_0)])))        
+        #Doing the Greedy Search
         while(not queue.empty() and not founded):
             actual = queue.get()
             actual = actual[1]
@@ -30,8 +30,24 @@ class A_star(SearchAlgorithm):
             steps = self.calculate_next_steps(actual[0], actual[1], actual[2])
             #print("That steps: ", steps)
             for s in steps:
-                queue.put((self.calculate_heuristic(s[0], s[1]) + self.calculate_cost(actual[0] ,actual[1] ,s[0], s[1]) , s))
+                queue.put((self.get_cost(s[0], s[1], s[0], s[1]) , s))
         
         if(not founded):
             print("The algorithm does not found the target")
-            
+
+    def get_cost(self, row_a0, col_a0, row_a1, col_a1):
+        #When using only heuristic, the only aspect that matters is the first two arguments
+        pass
+
+
+class GreedySearch(InformedSearch):
+    def get_cost(self, row_a0, col_a0, row_a1, col_a1):
+        return self.calculate_heuristic(row_a0, col_a0)
+
+class A_star(InformedSearch):
+    def get_cost(self, row_a0, col_a0, row_a1, col_a1):
+        return self.calculate_heuristic(self.row_0, self.col_0) + self.calculate_cost(row_a0 ,col_a0 ,row_a1, col_a1)
+    
+class UCS(InformedSearch):
+    def get_cost(self, row_a0, col_a0, row_a1, col_a1):
+        return self.calculate_cost(row_a0 ,col_a0 ,row_a1, col_a1)

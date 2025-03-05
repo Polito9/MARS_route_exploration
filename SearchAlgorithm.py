@@ -17,7 +17,6 @@ class SearchAlgorithm:
 
         #creating an empty 2D array of visited
         self.reset_visited()
-        
 
     def validate_state(self, row_a0, col_a0,row_a1, col_a1):
         #Validate that it is not -1 and the difference is less than .25
