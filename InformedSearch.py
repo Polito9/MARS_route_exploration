@@ -12,7 +12,9 @@ class InformedSearch(SearchAlgorithm):
         queue = PriorityQueue()
         queue.put((self.get_cost(self.row_0, self.col_0, self.row_0, self.col_0) , (self.row_0, self.col_0, [(self.row_0, self.col_0)])))        
         #Doing the Greedy Search
-        while(not queue.empty() and not founded):
+        while(not queue.empty()):
+            if(founded):
+                break
             actual = queue.get()
             actual = actual[1]
             if(len(self.visited[actual[0]][actual[1]])>0):
@@ -30,7 +32,7 @@ class InformedSearch(SearchAlgorithm):
             steps = self.calculate_next_steps(actual[0], actual[1], actual[2])
             #print("That steps: ", steps)
             for s in steps:
-                queue.put((self.get_cost(s[0], s[1], s[0], s[1]) , s))
+                queue.put((self.get_cost(actual[0], actual[1], s[0], s[1]) , s))
         
         if(not founded):
             print("The algorithm does not found the target")
