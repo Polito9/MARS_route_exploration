@@ -4,9 +4,9 @@ from InformedSearch import *
 from time import perf_counter
 
 #Loading numpy array
-mars_map = np.load('mars_map.npy')
+mars_map = np.load('crater_map.npy')
 nr, nc = mars_map.shape
-scale = 10.0174
+scale = 10.045
 
 #To convert the (x, y) coordinates into columns and rows
 def get_column(x):
@@ -16,8 +16,8 @@ def get_row(y):
     return nr - round(y/scale)
 
 #Initial point
-x0 = 2850
-y0 = 6400
+x0 = 3350
+y0 = 5800
 row_0 = get_row(y0)
 col_0 = get_column(x0)
 

@@ -20,8 +20,8 @@ import plotly.graph_objects as px
 #------------------------------------------------------------------------------------------------------------------
 #   File names
 #------------------------------------------------------------------------------------------------------------------
-input_file = "./reto/mars_map.IMG"
-output_file = "mars_map.npy"
+input_file = r"C:\Users\isaop\OneDrive\Documentos\GitHub\MARS_route_exploration\crater_map.IMG"
+output_file = "crater_map.npy"
 
 #------------------------------------------------------------------------------------------------------------------
 #   Load map data
