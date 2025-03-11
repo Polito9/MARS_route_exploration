@@ -15,15 +15,21 @@ def get_column(x):
 def get_row(y):
     return nr - round(y/scale)
 
-#Initial point
-x0 = 3350
-y0 = 5800
+#Initial points
+#X0 = 2300
+#Y0 = 4000
+
+#x0 = 3000
+#y0 = 6000
+
+x0 = 3200
+y0 = 5000
 row_0 = get_row(y0)
 col_0 = get_column(x0)
 
 #Target
-xf = 3150 
-yf = 6800
+xf = 3350 
+yf = 5800
 row_f = get_row(yf)
 col_f = get_column(xf)
 
@@ -39,7 +45,7 @@ Algoritmos de busqueda usados:
 
 print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
-MAX_HEIGHT_MOVEMENT = .25
+MAX_HEIGHT_MOVEMENT = .1991
 
 #A*
 print("WITH A*: ")
