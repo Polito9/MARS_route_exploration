@@ -19,7 +19,7 @@ class SearchAlgorithm:
         self.reset_visited()
 
     def validate_state(self, row_a0, col_a0,row_a1, col_a1):
-        #Validate that it is not -1 and the difference is less than .25
+        #Validate that it is not -1 and the difference is less than the max_height_movement
         if(self.mars_map[row_a1][col_a1] == -1):
             return False
         
@@ -47,7 +47,6 @@ class SearchAlgorithm:
         n1 = self.mars_map[row_a1][col_a1]
         n2 = self.mars_map[row_a0][col_a0]
         dif = abs(n1 - n2)
-        
         return dif
     
     def calculate_distance(self, steps, scale):

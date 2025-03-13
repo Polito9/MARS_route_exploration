@@ -39,7 +39,8 @@ Algoritmos de busqueda usados:
 
 print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
-MAX_HEIGHT_MOVEMENT = .3
+MAX_HEIGHT_MOVEMENT = .25
+
 
 
 #BFS
@@ -59,10 +60,11 @@ print("With Greedy Search")
 greedy = GreedySearch(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 time_0 = perf_counter()
 steps = greedy.search()
-print("Aproximate distance traveled in meters: ", greedy.calculate_distance(steps, scale))
+print("Approximate distance traveled in meters: ", greedy.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("Greedy took: ", str(time_1-time_0))
 print()
+
 
 
 #UCS
@@ -70,7 +72,7 @@ print("With UCS: ")
 ucs = UCS(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 time_0 = perf_counter()
 steps = ucs.search()
-print("Aproximate distance traveled in meters: ", ucs.calculate_distance(steps, scale))
+print("Approximate distance traveled in meters: ", ucs.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("UCS took: ", str(time_1-time_0))
 print()
@@ -80,7 +82,7 @@ print("WITH A*: ")
 a_star = A_star(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 time_0 = perf_counter()
 steps = a_star.search()
-print("Aproximate distance traveled in meters: ", a_star.calculate_distance(steps, scale))
+print("Approximate distance traveled in meters: ", a_star.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("A* took: ", str(time_1-time_0))
 print()

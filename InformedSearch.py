@@ -50,8 +50,8 @@ class GreedySearch(InformedSearch):
 
 class A_star(InformedSearch):
     def get_cost(self, row_a0, col_a0, row_a1, col_a1):
-        return self.calculate_heuristic(self.row_0, self.col_0) + self.calculate_cost(row_a0 ,col_a0 ,row_a1, col_a1)
+        return self.calculate_heuristic(row_a0, col_a0) + self.calculate_cost(row_a0 ,col_a0 ,row_a1, col_a1)
     
 class UCS(InformedSearch):
     def get_cost(self, row_a0, col_a0, row_a1, col_a1):
-        return self.calculate_cost(row_a0 ,col_a0 ,row_a1, col_a1)
+        return self.calculate_cost(row_a0, col_a0 ,row_a1, col_a1)
