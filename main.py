@@ -2,6 +2,8 @@ import numpy as np
 from BFS import BFS
 from InformedSearch import *
 from time import perf_counter
+from Graphics import plot_route
+
 
 #Loading numpy array
 mars_map = np.load('mars_map.npy')
@@ -16,8 +18,8 @@ def get_row(y):
     return nr - round(y/scale)
 
 #Initial point
-x0 = 2850 
-y0 = 6400 
+x0 = 2850  
+y0 = 6400  
 row_0 = get_row(y0)
 col_0 = get_column(x0)
 
@@ -41,7 +43,16 @@ print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
 MAX_HEIGHT_MOVEMENT = .25
 
-
+#Greedy
+print("With Greedy Search")
+greedy = GreedySearch(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+time_0 = perf_counter()
+steps = greedy.search()
+print("Approximate distance traveled in meters: ", greedy.calculate_distance(steps, scale))
+time_1 = perf_counter()
+print("Greedy took: ", str(time_1-time_0))
+plot_route(steps, mars_map, scale, "Greedy")
+print()
 
 #BFS
 print("With BFS: ")
@@ -51,21 +62,8 @@ steps = bf.search()
 print("Approximate distance traveled in meters: ", bf.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("BFS took: ", str(time_1-time_0))
+plot_route(steps, mars_map, scale, "BFS")
 print()
-
-
-
-#Greedy
-print("With Greedy Search")
-greedy = GreedySearch(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
-time_0 = perf_counter()
-steps = greedy.search()
-print("Approximate distance traveled in meters: ", greedy.calculate_distance(steps, scale))
-time_1 = perf_counter()
-print("Greedy took: ", str(time_1-time_0))
-print()
-
-
 
 #UCS
 print("With UCS: ")
@@ -75,6 +73,7 @@ steps = ucs.search()
 print("Approximate distance traveled in meters: ", ucs.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("UCS took: ", str(time_1-time_0))
+plot_route(steps, mars_map, scale, "UCS")
 print()
 
 #A*
@@ -85,4 +84,5 @@ steps = a_star.search()
 print("Approximate distance traveled in meters: ", a_star.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("A* took: ", str(time_1-time_0))
+plot_route(steps, mars_map, scale, "A*")
 print()
