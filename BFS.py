@@ -26,9 +26,10 @@ class BFS(SearchAlgorithm):
             #print(len(self.visited))
             #print("Actual: ",actual)
             if(actual[0] == self.row_f  and actual[1] == self.col_f):
-                print("Founded in ", actual[2])
-                print("It took ", len(actual[2]), " steps")
+                #print("Founded in ", actual[2])
+                #print("It took ", len(actual[2]), " steps")
                 founded = True
+                return actual[2]
 
             steps = self.calculate_next_steps(actual[0], actual[1], actual[2])
             #print("That steps: ", steps)
@@ -37,3 +38,5 @@ class BFS(SearchAlgorithm):
         
         if(not founded):
             print("The algorithm does not found the target")
+        
+        return []

@@ -49,7 +49,18 @@ class SearchAlgorithm:
         dif = abs(n1 - n2)
         
         return dif
+    
+    def calculate_distance(self, steps, scale):
+        distance = 0
+        for i in range(1, len(steps)):
+            dif = abs(steps[i-1][0] - steps[i][0])
+            dif += abs(steps[i-1][1] - steps[i][1])
+            if(dif == 2):
+                distance += (2*(scale**2))**(1/2)
+            else:
+                distance += scale
 
+        return distance
 
     def calculate_next_steps(self, row_a, col_a, step_s):
         #Goes through all the possible states and validates that it is possible to be there

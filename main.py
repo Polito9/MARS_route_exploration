@@ -16,14 +16,14 @@ def get_row(y):
     return nr - round(y/scale)
 
 #Initial point
-x0 = 2850
-y0 = 6400
+x0 = 2850 
+y0 = 6400 
 row_0 = get_row(y0)
 col_0 = get_column(x0)
 
 #Target
-xf = 3150 
-yf = 6800
+xf = 3150
+yf = 6800 
 row_f = get_row(yf)
 col_f = get_column(xf)
 
@@ -39,41 +39,48 @@ Algoritmos de busqueda usados:
 
 print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
-MAX_HEIGHT_MOVEMENT = .25
+MAX_HEIGHT_MOVEMENT = .3
 
-#A*
-print("WITH A*: ")
-a_star = A_star(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
-time_0 = perf_counter()
-a_star.search()
-time_1 = perf_counter()
-print("A* took: ", str(time_1-time_0))
-print()
-
-#Greedy
-print("With Greedy Search")
-greedy = GreedySearch(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
-time_0 = perf_counter()
-greedy.search()
-time_1 = perf_counter()
-
-print("Greedy took: ", str(time_1-time_0))
-print()
 
 #BFS
 print("With BFS: ")
 bf = BFS(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 time_0 = perf_counter()
-bf.search()
+steps = bf.search()
+print("Approximate distance traveled in meters: ", bf.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("BFS took: ", str(time_1-time_0))
 print()
+
+
+
+#Greedy
+print("With Greedy Search")
+greedy = GreedySearch(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+time_0 = perf_counter()
+steps = greedy.search()
+print("Aproximate distance traveled in meters: ", greedy.calculate_distance(steps, scale))
+time_1 = perf_counter()
+print("Greedy took: ", str(time_1-time_0))
+print()
+
 
 #UCS
 print("With UCS: ")
 ucs = UCS(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 time_0 = perf_counter()
-ucs.search()
+steps = ucs.search()
+print("Aproximate distance traveled in meters: ", ucs.calculate_distance(steps, scale))
 time_1 = perf_counter()
 print("UCS took: ", str(time_1-time_0))
+print()
+
+#A*
+print("WITH A*: ")
+a_star = A_star(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+time_0 = perf_counter()
+steps = a_star.search()
+print("Aproximate distance traveled in meters: ", a_star.calculate_distance(steps, scale))
+time_1 = perf_counter()
+print("A* took: ", str(time_1-time_0))
 print()
