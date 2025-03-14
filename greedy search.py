@@ -1,7 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-height_map = np.load("mars_map.npy")
+height_map = np.load("crater_map.npy")
+
+visited = set()
+
+minimum_height = 200
 
 def meters_to_indices(x, y, scale):
     """
@@ -20,17 +24,17 @@ def get_neighbors(i, j):
     ]
 
 def greedy_search(height_map, start_x, start_y, scale, max_height_diff=2.0):
+    global minimum_height
     """
     Realiza greedy desde la posición inicial (start_x, start_y).
     Devuelve la trayectoria y la altura más baja alcanzada.
     """
     # Convertir coordenadas en metros a índices de la matriz
-    i, j = meters_to_indices(start_x, start_y, scale)
-    
+    i, j = start_x, start_y
+    print(i, j)
     # Inicializar la trayectoria y la altura actual
     trajectory = [(i, j)]
     current_height = height_map[i, j]
-    
     while True:
         neighbors = get_neighbors(i, j)
         valid_neighbors = []
@@ -41,7 +45,7 @@ def greedy_search(height_map, start_x, start_y, scale, max_height_diff=2.0):
             if 0 <= ni < height_map.shape[0] and 0 <= nj < height_map.shape[1]:
                 neighbor_height = height_map[ni, nj]
                 # Verificar si el vecino es válido (diferencia de altura <= max_height_diff)
-                if neighbor_height != -1 and abs(neighbor_height - current_height) <= max_height_diff:
+                if neighbor_height != -1 and abs(neighbor_height - current_height) <= max_height_diff and (ni, nj) not in visited:
                     valid_neighbors.append((ni, nj, neighbor_height))
         
         # Si no hay vecinos válidos, terminar la búsqueda
@@ -53,13 +57,15 @@ def greedy_search(height_map, start_x, start_y, scale, max_height_diff=2.0):
         
         # Mover al vecino seleccionado
         trajectory.append((next_i, next_j))
+        visited.add((next_i, next_j))
         current_height = next_height
+        minimum_height = min([minimum_height, next_height])
         i, j = next_i, next_j
     
     # Convertir la trayectoria a coordenadas en metros
     trajectory_meters = [(j * scale, i * scale) for i, j in trajectory]
     
-    return trajectory_meters, current_height
+    return trajectory_meters, minimum_height
 
 # Parámetros del mapa y posiciones iniciales
 scale = 10.045  # Escala del mapa (metros por píxel)
@@ -74,12 +80,25 @@ start_positions = [
 
 # Ejecutar greedy desde cada posición inicial
 results = []
-for start_x, start_y in start_positions:
+index_starts = []
+nr, nc = height_map.shape
+
+def get_column(x):
+    return round(x/scale)
+
+def get_row(y):
+    return nr - round(y/scale)
+
+for x, y in start_positions:
+    index_starts.append((get_row(y), get_column(x)))
+
+for start_x, start_y in index_starts:
     trajectory, lowest_height = greedy_search(height_map, start_x, start_y, scale)
     results.append((start_x, start_y, trajectory, lowest_height))
     print(f"Posición inicial: ({start_x}, {start_y})")
     print(f"Punto más bajo alcanzado: {lowest_height} metros")
     print(f"Trayectoria: {len(trajectory)} pasos\n")
+
 
 # Función para graficar la trayectoria
 def plot_trajectory(height_map, trajectory, start_x, start_y, scale):
