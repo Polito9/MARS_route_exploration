@@ -4,7 +4,6 @@ from InformedSearch import *
 from time import perf_counter
 from Graphics import plot_route
 
-
 #Loading numpy array
 mars_map = np.load('mars_map.npy')
 nr, nc = mars_map.shape
@@ -24,7 +23,7 @@ row_0 = get_row(y0)
 col_0 = get_column(x0)
 
 #Target
-xf = 3150
+xf = 3150 
 yf = 6800 
 row_f = get_row(yf)
 col_f = get_column(xf)
@@ -41,7 +40,19 @@ Algoritmos de busqueda usados:
 
 print("Origin: ", row_0, col_0)
 print("Target: ", row_f, col_f)
-MAX_HEIGHT_MOVEMENT = .25
+MAX_HEIGHT_MOVEMENT = .3
+
+#A*
+print("WITH A*: ")
+a_star = A_star(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
+time_0 = perf_counter()
+steps = a_star.search()
+print("Approximate distance traveled in meters: ", a_star.calculate_distance(steps, scale))
+time_1 = perf_counter()
+print(steps)
+print("A* took: ", str(time_1-time_0))
+plot_route(steps, mars_map, scale, "A*")
+
 
 #Greedy
 print("With Greedy Search")
@@ -50,6 +61,7 @@ time_0 = perf_counter()
 steps = greedy.search()
 print("Approximate distance traveled in meters: ", greedy.calculate_distance(steps, scale))
 time_1 = perf_counter()
+print(steps)
 print("Greedy took: ", str(time_1-time_0))
 plot_route(steps, mars_map, scale, "Greedy")
 print()
@@ -60,10 +72,12 @@ bf = BFS(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
 time_0 = perf_counter()
 steps = bf.search()
 print("Approximate distance traveled in meters: ", bf.calculate_distance(steps, scale))
+print(steps)
 time_1 = perf_counter()
 print("BFS took: ", str(time_1-time_0))
 plot_route(steps, mars_map, scale, "BFS")
 print()
+
 
 #UCS
 print("With UCS: ")
@@ -72,17 +86,7 @@ time_0 = perf_counter()
 steps = ucs.search()
 print("Approximate distance traveled in meters: ", ucs.calculate_distance(steps, scale))
 time_1 = perf_counter()
+print(steps)
 print("UCS took: ", str(time_1-time_0))
 plot_route(steps, mars_map, scale, "UCS")
-print()
-
-#A*
-print("WITH A*: ")
-a_star = A_star(row_0, col_0, row_f, col_f, mars_map, MAX_HEIGHT_MOVEMENT)
-time_0 = perf_counter()
-steps = a_star.search()
-print("Approximate distance traveled in meters: ", a_star.calculate_distance(steps, scale))
-time_1 = perf_counter()
-print("A* took: ", str(time_1-time_0))
-plot_route(steps, mars_map, scale, "A*")
 print()
