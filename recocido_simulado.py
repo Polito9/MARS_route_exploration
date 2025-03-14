@@ -21,7 +21,7 @@ def get_neighbors(i, j):
 def simulated_annealing(height_map, start_x, start_y, scale, max_iter=1000, initial_temp=100.0, alpha=0.99, max_height_diff=2.0):
     """
     Realiza recocido simulado desde la posición inicial (start_x, start_y).
-    Devuelve la trayectoria y la altura más baja alcanzada.
+    Devuelve la trayectoria, la altura más baja alcanzada y la posición donde se alcanzó.
     """
     # Convertir coordenadas en metros a índices de la matriz
     i, j = meters_to_indices(start_x, start_y, scale)
@@ -71,11 +71,17 @@ def simulated_annealing(height_map, start_x, start_y, scale, max_iter=1000, init
         
         # Registrar la posición actual en la trayectoria
         trajectory.append((i, j))
+        
+        # Reducir la temperatura
+        T *= alpha
     
     # Convertir la trayectoria a coordenadas en metros
     trajectory_meters = [(j * scale, i * scale) for i, j in trajectory]
     
-    return trajectory_meters, best_height
+    # Convertir best_position a coordenadas en metros
+    best_position_meters = (best_position[1] * scale, best_position[0] * scale)
+    
+    return trajectory_meters, best_height, best_position_meters
 
 # Parámetros del mapa y posiciones iniciales
 scale = 10.045  # Escala del mapa (metros por píxel)
@@ -91,14 +97,15 @@ start_positions = [
 # Ejecutar recocido simulado desde cada posición inicial
 results = []
 for start_x, start_y in start_positions:
-    trajectory, lowest_height = simulated_annealing(height_map, start_x, start_y, scale)
-    results.append((start_x, start_y, trajectory, lowest_height))
+    trajectory, lowest_height, best_position = simulated_annealing(height_map, start_x, start_y, scale)
+    results.append((start_x, start_y, trajectory, lowest_height, best_position))
     print(f"Posición inicial: ({start_x}, {start_y})")
     print(f"Punto más bajo alcanzado: {lowest_height} metros")
+    print(f"Posición del punto más bajo: {best_position}")
     print(f"Trayectoria: {len(trajectory)} pasos\n")
 
 # Función para graficar la trayectoria
-def plot_trajectory(height_map, trajectory, start_x, start_y, scale):
+def plot_trajectory(height_map, trajectory, start_x, start_y, best_position, scale):
     plt.figure(figsize=(10, 8))
     plt.imshow(height_map, cmap='terrain', extent=[0, height_map.shape[1] * scale, 0, height_map.shape[0] * scale])
     plt.colorbar(label='Altura (m)')
@@ -112,6 +119,9 @@ def plot_trajectory(height_map, trajectory, start_x, start_y, scale):
     plt.plot(start_x, start_y, 'bo', label='Inicio')
     plt.plot(x_coords[-1], y_coords[-1], 'go', label='Fin')
     
+    # Marcar el punto más bajo
+    plt.plot(best_position[0], best_position[1], 'mx', markersize=10, label='Punto más bajo')
+    
     plt.title(f"Trayectoria desde ({start_x}, {start_y})")
     plt.xlabel('x (m)')
     plt.ylabel('y (m)')
@@ -119,5 +129,5 @@ def plot_trajectory(height_map, trajectory, start_x, start_y, scale):
     plt.show()
 
 # Graficar las trayectorias
-for start_x, start_y, trajectory, _ in results:
-    plot_trajectory(height_map, trajectory, start_x, start_y, scale)
+for start_x, start_y, trajectory, _, best_position in results:
+    plot_trajectory(height_map, trajectory, start_x, start_y, best_position, scale)
