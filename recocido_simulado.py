@@ -71,9 +71,6 @@ def simulated_annealing(height_map, start_x, start_y, scale, max_iter=1000, init
         
         # Registrar la posición actual en la trayectoria
         trajectory.append((i, j))
-        
-        # Enfriar la temperatura
-        T *= alpha
     
     # Convertir la trayectoria a coordenadas en metros
     trajectory_meters = [(j * scale, i * scale) for i, j in trajectory]
