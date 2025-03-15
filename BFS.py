@@ -37,6 +37,14 @@ class BFS(SearchAlgorithm):
                 queue.append(s)
         
         if(not founded):
+            print("It got to ", actual[2])
+            print("It took ", len(actual[2]), " steps")
+            founded = True
+
+            steps = self.calculate_next_steps(actual[0], actual[1], actual[2])
+            #print("That steps: ", steps)
+            for s in steps:
+                queue.append(s)
             print("The algorithm does not found the target")
         
         return []

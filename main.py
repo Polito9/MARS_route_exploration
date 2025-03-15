@@ -5,9 +5,9 @@ from time import perf_counter
 from Graphics import plot_route
 
 #Loading numpy array
-mars_map = np.load('mars_map.npy')
+mars_map = np.load('crater_map.npy')
 nr, nc = mars_map.shape
-scale = 10.0174
+scale = 10.045
 
 #To convert the (x, y) coordinates into columns and rows
 def get_column(x):
@@ -90,3 +90,20 @@ print(steps)
 print("UCS took: ", str(time_1-time_0))
 plot_route(steps, mars_map, scale, "UCS")
 print()
+
+# Graficar los resultados (Quiero ver algunas cosas)
+def plot_path(mars_map, path, title="Path"):
+    plt.figure(figsize=(10, 10))
+    plt.imshow(mars_map, cmap='hot', origin='upper')
+    
+    if path:
+        rows, cols = zip(*[(p[0], p[1]) for p in path])
+        plt.plot(cols, rows, marker="o", color="cyan", markersize=2, linewidth=1)
+
+    plt.title(title)
+    plt.colorbar()
+    plt.show()
+plot_path(mars_map, a_star.visited[row_f][col_f], "A* Path")
+plot_path(mars_map, greedy.visited[row_f][col_f], "Greedy Path")
+plot_path(mars_map, bf.visited[row_f][col_f], "BFS Path")
+plot_path(mars_map, ucs.visited[row_f][col_f], "UCS Path")
