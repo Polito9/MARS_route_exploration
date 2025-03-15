@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import random
 import math
 
-height_map = np.load("mars_map.npy") 
+height_map = np.load("crater_map.npy") 
 
 def meters_to_indices(x, y, scale):
     return int(y // scale), int(x // scale)
